@@ -1,5 +1,5 @@
 from flask import Flask
-import requets
+import requests
 app = Flask(__name__)
 
 @app.route('/')
