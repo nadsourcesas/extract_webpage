@@ -2,6 +2,7 @@ from flask import Flask
 import pandas as pd
 import requests
 import wget
+import os
 app = Flask(__name__)
 os.chdir("static")
 @app.route('/')
