@@ -3,3 +3,4 @@ Gunicorn
 requests
 wget
 pandas
+openpyxl
