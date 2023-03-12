@@ -5,3 +5,6 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     return requests.get(requests.get('http://testi123.pythonanywhere.com/url/url').text).text
+@app.route('/test')
+def hello_worldtest():
+    return requests.get(requests.get('http://testi123.pythonanywhere.com/url/url').text).text
