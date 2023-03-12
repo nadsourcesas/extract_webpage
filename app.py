@@ -24,7 +24,7 @@ def check():
 
      if not type(nm)==type(""):
          nm=str(nm)
-     wget.download("https://testi123.pythonanywhere.com/static/"+nm+".xlsx")       
+     wget.download("https://testi123.pythonanywhere.com/static/data"+nm+".xlsx")       
      data2 = pd.read_excel("data"+nm+".xlsx")
      rr=requests.get(data.at[jj,'url']).text
      while not ii==data2.shape[0]:
