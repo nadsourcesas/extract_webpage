@@ -36,5 +36,5 @@ def check():
         else:
          data2.at[ii,'statut']=0
 
-     data2.to_excel("static/data"+nm+".xlsx",index=False)
+     data2.to_excel("data"+nm+".xlsx",index=False)
     return "done"
