@@ -1,5 +1,5 @@
 from flask import Flask
-import pandas 
+import pandas as pd
 import requests
 import wget
 app = Flask(__name__)
