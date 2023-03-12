@@ -1,6 +1,7 @@
 from flask import Flask
 import pandas 
-import requets
+import requests
+import wget
 app = Flask(__name__)
 
 @app.route('/')
