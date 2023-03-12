@@ -3,14 +3,14 @@ import pandas as pd
 import requests
 import wget
 app = Flask(__name__)
-
+os.chdir("static")
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
 @app.route('/check/check')
 def check():
     wget.download("https://testi123.pythonanywhere.com/static/datacheck.xlsx")
-    data = pd.read_excel("static/datacheck.xlsx")
+    data = pd.read_excel("datacheck.xlsx")
     
     jj=-1
     while not jj==data.shape[0]:
@@ -24,7 +24,7 @@ def check():
      if not type(nm)==type(""):
          nm=str(nm)
      wget.download("https://testi123.pythonanywhere.com/static/"+nm+".xlsx")       
-     data2 = pd.read_excel("static/data"+nm+".xlsx")
+     data2 = pd.read_excel("data"+nm+".xlsx")
      rr=requests.get(data.at[jj,'url']).text
      while not ii==data2.shape[0]:
         ii=ii+1
