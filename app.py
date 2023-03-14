@@ -30,12 +30,15 @@ def taskgetready():
  text=text+"<br>"+subprocess.getoutput("git config --global user.signingkey key.pub")
 
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git remote add bahaeelhmimdi git@github.com:misterbahaehmimdi/flask-hello-world.git")
+ text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git remote set-url origin22 git@github.com:misterbahaehmimdi/flask-hello-world.git")
+
+
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git config --global user.email 'bahae-123@hotmail.com'")
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git config --global user.name 'bahaeelhmimdi'")
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git add .")
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git status")
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git commit -m 'bahae'")
- text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git push bahaeelhmimdi master")
+ text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git push origin22 master")
  return text 
 @app.route('/sync')
 def sync():
