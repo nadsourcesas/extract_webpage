@@ -9,7 +9,8 @@ app = Flask(__name__)
 os.chdir("static")
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return subprocess.getoutput("ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts")
+
 
 @app.route('/task/<string:name>')
 def task(name):
