@@ -67,7 +67,7 @@ def check():
     data = pd.read_excel("datacheck.xlsx")
     
     jj=-1
-    while not jj==data.shape[0]:
+    while not jj>=data.shape[0]:
      try:
       jj=jj+1
       ii=-1
@@ -84,7 +84,7 @@ def check():
        
       rr=requests.get(data.at[jj,'url']).text
      
-      while not ii==data2.shape[0]:
+      while not ii>=data2.shape[0]:
        try: 
         ii=ii+1
         if ii==data2.shape[0]:
