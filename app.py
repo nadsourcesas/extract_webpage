@@ -97,4 +97,4 @@ def check():
      files = {'file': open('data'+nm+'.xlsx', 'rb')}
 
      r = requests.post(url, files=files)
-    return "done"
+    return str(fails)
