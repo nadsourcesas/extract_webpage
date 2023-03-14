@@ -66,13 +66,8 @@ def check():
     wget.download("https://testi123.pythonanywhere.com/static/datacheck.xlsx")
     data = pd.read_excel("datacheck.xlsx")
     
-    jj=-1
-    while not jj>=data.shape[0]:
+    for d1 in data.iterrows():
      try:
-      jj=jj+1
-      ii=-1
-      if jj==data.shape[0]:
-             break
       nm=data.at[jj,'name']
       print("-+-+-+",nm,"-+-+-+-+",data.at[jj,'name']) 
 
@@ -82,21 +77,17 @@ def check():
       data2 = pd.read_excel("data"+nm+".xlsx")
       
        
-      rr=requests.get(data.at[jj,'url']).text
+      rr=requests.get(d1['url']).text
      
-      while not ii>=data2.shape[0]:
+      for d2 in data2.iterrows():
        try: 
-        ii=ii+1
-        if ii==data2.shape[0]:
-            
-            break
-        if data2.at[ii,'text'].replace("\n","#012") in rr.replace("\\n","#012").replace("\#012","#012"):
-         data2.at[ii,'statut']=1
+        if d2['text'].replace("\n","#012") in rr.replace("\\n","#012").replace("\#012","#012"):
+         d2['statut']=1
         else:
-         data2.at[ii,'statut']=0
+         d2['statut']=0
         
        except Exception as eror:
-        lis.append({"name":nm,"url":data.at[jj,'url'],"text":data2.at[ii,'text'],"error":str(eror)})
+        lis.append({"name":nm,"url":d1.at['url'],"text":d2.at['text'],"error":str(eror)})
         print("----",lis)
        
       if True:   
@@ -107,7 +98,7 @@ def check():
        r = requests.post(url, files=files)
        del data2 
      except Exception as first:
-                lis.append({"url":data.at[jj,'url'],"name":data.at[jj,'name']   })
+                lis.append({"url":d1['url'],"name":data['name']   })
                 print("++++",lis)
      erros.append(lis)
     return "done"
