@@ -34,11 +34,11 @@ def taskgetready():
 
 
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git config --global user.email 'bahae-123@hotmail.com'")
- text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git config --global user.name 'bahaeelhmimdi'")
+ text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git config --global user.name 'misterbahaehmimdi'")
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git add .")
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git status")
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git commit -m 'bahae'")
- text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git push bahaeelhmimdi master")
+ text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git push origin master")
  return text 
 @app.route('/sync')
 def sync():
