@@ -61,7 +61,7 @@ def clone():
 def check():
     wget.download("https://testi123.pythonanywhere.com/static/datacheck.xlsx")
     data = pd.read_excel("datacheck.xlsx")
-    
+    fails=[]
     jj=-1
     while not jj==data.shape[0]:
      jj=jj+1
@@ -75,16 +75,23 @@ def check():
          nm=str(nm)
      wget.download("https://testi123.pythonanywhere.com/static/data"+nm+".xlsx")       
      data2 = pd.read_excel("data"+nm+".xlsx")
+     do=False
+       
      rr=requests.get(data.at[jj,'url']).text
+     
      while not ii==data2.shape[0]:
+       try: 
         ii=ii+1
         if ii==data2.shape[0]:
+            do=True
             break
-        if data2.at[ii,'text'].replace("<br>","#012") in rr.replace("\<br>","#012").replace("\#012","#012"):
+        if data2.at[ii,'text'].replace("\n","#012") in rr.replace("\\n","#012").replace("\#012","#012"):
          data2.at[ii,'statut']=1
         else:
          data2.at[ii,'statut']=0
-
+       except Exception as eror:
+        fails.append({"name":nm,"url":data.at[jj,'url'],"error":str(eror)})
+        break
      data2.to_excel("data"+nm+".xlsx",index=False)
      url = 'https://testi123.pythonanywhere.com/remplacer_xlsx/'+nm
      files = {'file': open('data'+nm+'.xlsx', 'rb')}
