@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 import wget
 import os
-import subprocess
+import subprocess 
 
 app = Flask(__name__)
 os.chdir("static")
@@ -41,6 +41,8 @@ def taskgetready():
 def sync():
  text=""
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git remote add bahaeelhmimdi git@github.com:misterbahaehmimdi/flask-hello-world.git")
+ text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git remote set-url bahaeelhmimdi git@github.com:misterbahaehmimdi/flask-hello-world.git")
+    
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git config --global user.email 'bahae-123@hotmail.com'")
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git config --global user.name 'bahaeelhmimdi'")
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git add .")
