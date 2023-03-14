@@ -68,7 +68,7 @@ def check():
     
     jj=-1
     while not jj==data.shape[0]:
-     try:   
+     try:
       jj=jj+1
       ii=-1
       if jj==data.shape[0]:
@@ -80,7 +80,7 @@ def check():
          nm=str(nm)
       wget.download("https://testi123.pythonanywhere.com/static/data"+nm+".xlsx")       
       data2 = pd.read_excel("data"+nm+".xlsx")
-      do=False
+      
        
       rr=requests.get(data.at[jj,'url']).text
      
@@ -94,12 +94,12 @@ def check():
          data2.at[ii,'statut']=1
         else:
          data2.at[ii,'statut']=0
-        do=True
+        
        except Exception as eror:
         lis.append({"name":nm,"url":data.at[jj,'url'],"text":data2.at[ii,'text'],"error":str(eror)})
         print("----",lis)
        
-      if do:   
+      if True:   
        data2.to_excel("data"+nm+".xlsx",index=False)
        url = 'https://testi123.pythonanywhere.com/remplacer_xlsx/'+nm
        files = {'file': open('data'+nm+'.xlsx', 'rb')}
