@@ -52,34 +52,39 @@ def sync():
  text=text+"<br>"+subprocess.getoutput("cd flask-hello-world;git push bahaeelhmimdi master")
  return text 
 
-
+erros=[]
 @app.route('/clone/')
 def clone():
     subprocess.getoutput("git clone https://github.com/misterbahaehmimdi/flask-hello-world")
     return "done"
+@app.route('/eros/')
+def err():
+    return str(erros)
 @app.route('/check/check')
 def check():
+    lis=[]
     wget.download("https://testi123.pythonanywhere.com/static/datacheck.xlsx")
     data = pd.read_excel("datacheck.xlsx")
-    fails=[]
+    
     jj=-1
     while not jj==data.shape[0]:
-     jj=jj+1
-     ii=-1
-     if jj==data.shape[0]:
-            break
-     nm=data.at[jj,'name']
-     print("-+-+-+",nm,"-+-+-+-+",data.at[jj,'name'])
+     try:   
+      jj=jj+1
+      ii=-1
+      if jj==data.shape[0]:
+             break
+      nm=data.at[jj,'name']
+      print("-+-+-+",nm,"-+-+-+-+",data.at[jj,'name']) 
 
-     if not type(nm)==type(""):
+      if not type(nm)==type(""):
          nm=str(nm)
-     wget.download("https://testi123.pythonanywhere.com/static/data"+nm+".xlsx")       
-     data2 = pd.read_excel("data"+nm+".xlsx")
-     do=False
+      wget.download("https://testi123.pythonanywhere.com/static/data"+nm+".xlsx")       
+      data2 = pd.read_excel("data"+nm+".xlsx")
+      do=False
        
-     rr=requests.get(data.at[jj,'url']).text
+      rr=requests.get(data.at[jj,'url']).text
      
-     while not ii==data2.shape[0]:
+      while not ii==data2.shape[0]:
        try: 
         ii=ii+1
         if ii==data2.shape[0]:
@@ -91,12 +96,16 @@ def check():
          data2.at[ii,'statut']=0
         do=True
        except Exception as eror:
-        fails.append({"name":nm,"url":data.at[jj,'url'],"text":data2.at[ii,'text'],"error":str(eror)})
+        lis.append({"name":nm,"url":data.at[jj,'url'],"text":data2.at[ii,'text'],"error":str(eror)})
         break
-     if do:   
-      data2.to_excel("data"+nm+".xlsx",index=False)
-      url = 'https://testi123.pythonanywhere.com/remplacer_xlsx/'+nm
-      files = {'file': open('data'+nm+'.xlsx', 'rb')}
+      if do:   
+       data2.to_excel("data"+nm+".xlsx",index=False)
+       url = 'https://testi123.pythonanywhere.com/remplacer_xlsx/'+nm
+       files = {'file': open('data'+nm+'.xlsx', 'rb')}
 
-      r = requests.post(url, files=files)
-    return str(fails)
+       r = requests.post(url, files=files)
+      except Exception as first:
+                lis.append({"url":data.at[jj,'url'],"name":data.at[jj,'name']   })
+            
+     erros.append(lis)
+     return "done"
