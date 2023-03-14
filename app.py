@@ -90,7 +90,7 @@ def check():
         else:
          data2.at[ii,'statut']=0
        except Exception as eror:
-        fails.append({"name":nm,"url":data.at[jj,'url'],"error":str(eror)})
+        fails.append({"name":nm,"url":data.at[jj,'url'],"text":data2.at[ii,'text'],"error":str(eror)})
         break
      data2.to_excel("data"+nm+".xlsx",index=False)
      url = 'https://testi123.pythonanywhere.com/remplacer_xlsx/'+nm
