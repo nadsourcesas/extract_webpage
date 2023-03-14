@@ -83,18 +83,20 @@ def check():
        try: 
         ii=ii+1
         if ii==data2.shape[0]:
-            do=True
+            
             break
         if data2.at[ii,'text'].replace("\n","#012") in rr.replace("\\n","#012").replace("\#012","#012"):
          data2.at[ii,'statut']=1
         else:
          data2.at[ii,'statut']=0
+        do=True
        except Exception as eror:
         fails.append({"name":nm,"url":data.at[jj,'url'],"text":data2.at[ii,'text'],"error":str(eror)})
         break
-     data2.to_excel("data"+nm+".xlsx",index=False)
-     url = 'https://testi123.pythonanywhere.com/remplacer_xlsx/'+nm
-     files = {'file': open('data'+nm+'.xlsx', 'rb')}
+     if do:   
+      data2.to_excel("data"+nm+".xlsx",index=False)
+      url = 'https://testi123.pythonanywhere.com/remplacer_xlsx/'+nm
+      files = {'file': open('data'+nm+'.xlsx', 'rb')}
 
-     r = requests.post(url, files=files)
+      r = requests.post(url, files=files)
     return str(fails)
