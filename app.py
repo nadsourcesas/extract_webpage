@@ -5,10 +5,7 @@ import wget
 import os
 import subprocess
 
-app = Flask(__name__,
-            static_url_path='', 
-            static_folder='flask-hello-world',
-            template_folder='flask-hello-world')
+app = Flask(__name__)
 os.chdir("static")
 @app.route('/')
 def hello_world():
