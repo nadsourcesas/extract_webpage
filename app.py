@@ -97,6 +97,7 @@ def check():
         do=True
        except Exception as eror:
         lis.append({"name":nm,"url":data.at[jj,'url'],"text":data2.at[ii,'text'],"error":str(eror)})
+        print("----",lis)
         break
       if do:   
        data2.to_excel("data"+nm+".xlsx",index=False)
@@ -106,6 +107,6 @@ def check():
        r = requests.post(url, files=files)
      except Exception as first:
                 lis.append({"url":data.at[jj,'url'],"name":data.at[jj,'name']   })
-            
+                print("++++",lis)
      erros.append(lis)
      return "done"
