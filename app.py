@@ -81,6 +81,8 @@ def check():
      
       for index2,d2 in data2.iterrows():
        try: 
+        if not type(d2['text'])==type(""):
+            continue
         if d2['text'].replace("\n","#012") in rr.replace("\\n","#012").replace("\#012","#012"):
          d2['statut']=1
         else:
