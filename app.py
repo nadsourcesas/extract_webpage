@@ -104,7 +104,7 @@ def check():
        files = {'file': open('data'+nm+'.xlsx', 'rb')}
 
        r = requests.post(url, files=files)
-      except Exception as first:
+     except Exception as first:
                 lis.append({"url":data.at[jj,'url'],"name":data.at[jj,'name']   })
             
      erros.append(lis)
