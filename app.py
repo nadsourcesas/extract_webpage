@@ -22,18 +22,28 @@ def taskgetready():
  wget.download("https://testi123.pythonanywhere.com/static/9854758/key")   
  wget.download("https://testi123.pythonanywhere.com/static/9854758/key.pub") 
  text=""   
- text=text+subprocess.getoutput("git clone https://github.com/misterbahaehmimdi/flask-hello-world")    
- text=text+subprocess.getoutput("chmod 600 key")
- text=text+subprocess.getoutput("chmod 600 key.pub")
- text=text+subprocess.getoutput("ssh-agent ssh-add key")
- text=text+subprocess.getoutput("cd static;git clone https://github.com/misterbahaehmimdi/flask-hello-world")   
- text=text+subprocess.getoutput("cd static;cd flask-hello-world;git remote add bahaeelhmimdi git@github.com:misterbahaehmimdi/flask-hello-world.git")
- text=text+subprocess.getoutput("cd static;cd flask-hello-world;git config --global user.email 'bahae-123@hotmail.com'")
- text=text+subprocess.getoutput("cd static;cd flask-hello-world;git config --global user.name 'bahaeelhmimdi'")
- text=text+subprocess.getoutput("cd static;cd flask-hello-world;git add .")
- text=text+subprocess.getoutput("cd static;cd flask-hello-world;git status")
- text=text+subprocess.getoutput("cd static;cd flask-hello-world;git commit -m 'bahae'")
- text=text+subprocess.getoutput("cd static;cd flask-hello-world;git push bahaeelhmimdi master")
+ text=text+"\n"+subprocess.getoutput("chmod 600 key")
+ text=text+"\n"+subprocess.getoutput("chmod 600 key.pub")
+ text=text+"\n"+subprocess.getoutput("ssh-agent ssh-add key")
+ text=text+"\n"+subprocess.getoutput("git clone https://github.com/misterbahaehmimdi/flask-hello-world")   
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git remote add bahaeelhmimdi git@github.com:misterbahaehmimdi/flask-hello-world.git")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git config --global user.email 'bahae-123@hotmail.com'")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git config --global user.name 'bahaeelhmimdi'")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git add .")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git status")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git commit -m 'bahae'")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git push bahaeelhmimdi master")
+ return text 
+@app.route('/sync')
+def sync():
+ text=""
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git remote add bahaeelhmimdi git@github.com:misterbahaehmimdi/flask-hello-world.git")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git config --global user.email 'bahae-123@hotmail.com'")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git config --global user.name 'bahaeelhmimdi'")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git add .")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git status")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git commit -m 'bahae'")
+ text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git push bahaeelhmimdi master")
  return text 
 
 
