@@ -19,6 +19,10 @@ def taskgetready():
  wget.download("https://testi123.pythonanywhere.com/static/9854758/key")   
  wget.download("https://testi123.pythonanywhere.com/static/9854758/key.pub") 
  return "key ready"
+@app.route('/clone/')
+def clone():
+    subprocess.getoutput("git clone https://github.com/misterbahaehmimdi/flask-hello-world")
+    return "done"
 @app.route('/check/check')
 def check():
     wget.download("https://testi123.pythonanywhere.com/static/datacheck.xlsx")
