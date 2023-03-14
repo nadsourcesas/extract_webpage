@@ -68,8 +68,8 @@ def check():
     
     for d1 in data.iterrows():
      try:
-      nm=data.at[jj,'name']
-      print("-+-+-+",nm,"-+-+-+-+",data.at[jj,'name']) 
+      nm=d1['name']
+      print("-+-+-+",nm,"-+-+-+-+",d1['name']) 
 
       if not type(nm)==type(""):
          nm=str(nm)
@@ -87,7 +87,7 @@ def check():
          d2['statut']=0
         
        except Exception as eror:
-        lis.append({"name":nm,"url":d1.at['url'],"text":d2.at['text'],"error":str(eror)})
+        lis.append({"name":nm,"url":d1['url'],"text":d2['text'],"error":str(eror)})
         print("----",lis)
        
       if True:   
@@ -98,7 +98,7 @@ def check():
        r = requests.post(url, files=files)
        del data2 
      except Exception as first:
-                lis.append({"url":d1['url'],"name":data['name']   })
+                lis.append({"url":d1['url'],"name":d1['name']   })
                 print("++++",lis)
      erros.append(lis)
     return "done"
