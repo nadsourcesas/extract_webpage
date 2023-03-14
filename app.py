@@ -26,6 +26,9 @@ def taskgetready():
  text=text+"\n"+subprocess.getoutput("chmod 600 key.pub")
  text=text+"\n"+subprocess.getoutput("ssh-agent ssh-add key")
  text=text+"\n"+subprocess.getoutput("git clone https://github.com/misterbahaehmimdi/flask-hello-world")   
+
+ text=text+"\n"+subprocess.getoutput("git config --global user.signingkey key.pub")
+
  text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git remote add bahaeelhmimdi git@github.com:misterbahaehmimdi/flask-hello-world.git")
  text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git config --global user.email 'bahae-123@hotmail.com'")
  text=text+"\n"+subprocess.getoutput("cd flask-hello-world;git config --global user.name 'bahaeelhmimdi'")
