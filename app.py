@@ -66,7 +66,7 @@ def check():
     wget.download("https://testi123.pythonanywhere.com/static/datacheck.xlsx")
     data = pd.read_excel("datacheck.xlsx")
     
-    for d1 in data.iterrows():
+    for index2,d1 in data.iterrows():
      try:
       nm=d1['name']
       print("-+-+-+",nm,"-+-+-+-+",d1['name']) 
@@ -79,7 +79,7 @@ def check():
        
       rr=requests.get(d1['url']).text
      
-      for d2 in data2.iterrows():
+      for index2,d2 in data2.iterrows():
        try: 
         if d2['text'].replace("\n","#012") in rr.replace("\\n","#012").replace("\#012","#012"):
          d2['statut']=1
