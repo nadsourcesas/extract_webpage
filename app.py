@@ -86,4 +86,8 @@ def check():
          data2.at[ii,'statut']=0
 
      data2.to_excel("data"+nm+".xlsx",index=False)
+     url = 'https://testi123.pythonanywhere.com/remplacer_xlsx/'+nm
+     files = {'file': open('data'+nm+'.xlsx', 'rb')}
+
+     r = requests.post(url, files=files)
     return "done"
