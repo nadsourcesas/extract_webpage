@@ -65,8 +65,9 @@ def check():
     lis=[]
     wget.download("https://testi123.pythonanywhere.com/static/datacheck.xlsx")
     data = pd.read_excel("datacheck.xlsx")
-    
-    for index2,d1 in data.iterrows():
+    al=list(data.iterrows())
+    lal=len(al)
+    for index2,d1 in al[int(al/2):]:
      try:
       nm=d1['name']
       print("-+-+-+",nm,"-+-+-+-+",d1['name']) 
@@ -92,7 +93,7 @@ def check():
         lis.append({"name":nm,"url":d1['url'],"text":d2['text'],"error":str(eror)})
         print("----",lis)
       data2.to_excel("data"+nm+".xlsx",index=False) 
-      if False:   
+      if True:   
        
        url = 'https://testi123.pythonanywhere.com/remplacer_xlsx/'+nm
        files = {'file': open('data'+nm+'.xlsx', 'rb')}
