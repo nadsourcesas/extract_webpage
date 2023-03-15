@@ -67,7 +67,7 @@ def check():
     data = pd.read_excel("datacheck.xlsx")
     al=list(data.iterrows())
     lal=len(al)
-    for index2,d1 in al[:int(lal/2)]:
+    for index2,d1 in al[int(lal/2):]:
      try:
       nm=d1['name']
       print("-+-+-+",nm,"-+-+-+-+",d1['name']) 
