@@ -91,9 +91,9 @@ def check():
        except Exception as eror:
         lis.append({"name":nm,"url":d1['url'],"text":d2['text'],"error":str(eror)})
         print("----",lis)
+      data2.to_excel("data"+nm+".xlsx",index=False) 
+      if False:   
        
-      if True:   
-       data2.to_excel("data"+nm+".xlsx",index=False)
        url = 'https://testi123.pythonanywhere.com/remplacer_xlsx/'+nm
        files = {'file': open('data'+nm+'.xlsx', 'rb')}
 
