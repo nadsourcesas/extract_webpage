@@ -85,9 +85,11 @@ def check():
         if not type(d2['text'])==type(""):
             continue
         if d2['text'].replace("\n","#012") in rr.replace("\\n","#012").replace("\#012","#012"):
-         d2['statut']=1
+       #  d2['statut']=1
+         data2.loc[index2, 'statut'] =1
+
         else:
-         d2['statut']=0
+         data2.loc[index2, 'statut'] =0
         
        except Exception as eror:
         lis.append({"name":nm,"url":d1['url'],"text":d2['text'],"error":str(eror)})
