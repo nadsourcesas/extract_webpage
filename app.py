@@ -12,6 +12,7 @@ os.chdir("static")
 def hello_world():
     return "hello in bahae api"
 def get_html_text(url):
+   try: 
     prefixes = ['http://', 'https://', 'http://www.', 'https://www.']
     
     for prefix in prefixes:
@@ -23,6 +24,8 @@ def get_html_text(url):
             print(f"Error occurred while trying {prefix + url}: {e}")
     
     return "nothing worked"
+   except Exception as problem:
+       return str(problem)
 def get_html(url):
     prefixes = ['http://', 'https://', 'http://www.', 'https://www.']
     
