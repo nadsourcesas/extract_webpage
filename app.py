@@ -12,7 +12,7 @@ os.chdir("static")
 def hello_world():
     return "hello in bahae api"
 def get_html_text(url):
-   tst= 
+   tst= []
    try: 
     prefixes = ['https://', 'http://', 'https://www.', 'http://www.']
     for prefix in prefixes:
