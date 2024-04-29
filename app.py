@@ -4,7 +4,8 @@ import requests
 import wget
 import os
 import subprocess 
- 
+from bs4 import BeautifulSoup
+
 app = Flask(__name__)
 os.chdir("static")
 @app.route('/')
@@ -17,7 +18,7 @@ def get_html_text(url):
         try:
             response = requests.get(prefix + url,timeout=10)
             if response.status_code == 200:
-                return response.text
+                return BeautifulSoup(response.text).get_text()
         except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
     
