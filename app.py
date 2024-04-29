@@ -32,7 +32,7 @@ def get_html_text(url):
         except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
     
-    return jsonify({'status': 'failed',lasturl:'', 'data': '','prefix':''})
+    return jsonify({'status': 'failed','lasturl':'', 'data': '','prefix':''})
    except Exception as problem:
        return str(problem)
 def get_html(url):
