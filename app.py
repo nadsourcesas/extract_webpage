@@ -51,4 +51,4 @@ def get_html(url):
 
 @app.errorhandler(404)
 def tasktest(name):
- return request.url
+ return get_html_text(request.url.replace(r"https://test2-bblm.onrender.com/",""))
