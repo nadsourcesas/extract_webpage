@@ -16,7 +16,7 @@ def get_html_text(url):
     
     for prefix in prefixes:
         try:
-            response = requests.get(prefix + url,timeout=10)
+            response = requests.get(prefix + url)
             if response.status_code == 200:
                 return BeautifulSoup(response.text).get_text()
         except Exception as e:#requests.RequestException
