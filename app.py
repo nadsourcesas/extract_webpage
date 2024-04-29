@@ -48,12 +48,7 @@ def get_html(url):
     
     return "nothing worked"
 
-@app.route('/taskhtml/<string:name>')
-def taskhtml(name):
- return get_html(name)
-@app.route(r'/(?P<name>.+)', strict_slashes=False)
-def task(name):
- return name 
-@app.route(r'/tasktest/(?P<name>.+)', strict_slashes=False)
+
+@app.errorhandler(404)
 def tasktest(name):
- return name
+ return request.url
