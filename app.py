@@ -15,6 +15,7 @@ def get_html_text(url):
    try: 
     prefixes = ['https://', 'http://', 'https://www.', 'http://www.']
     for prefix in prefixes:
+        if prefix in url:
             prefixes.remove(prefix)
             prefixes=[prefix]+prefixes
     for prefix in prefixes:
