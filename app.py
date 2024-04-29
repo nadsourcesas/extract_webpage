@@ -15,19 +15,18 @@ def get_html_text(url):
    tst= []
    ers= []
    try: 
-    prefixes = [ 'https://www.', 'http://www.','https://', 'http://']
-    for prefix in prefixes.copy():
-        if prefix in url:
-            prefixes.remove(prefix)
-            prefixes=[prefix]+prefixes
+    prefixes = [ 'https://www.','https://', 'http://www.', 'http://']
+    if "//" in url :   
+        prefixes=['']
     for prefix in prefixes:
         
         try:
-            if prefix in url :
+            if "//" in url :
                 testedurl= url
                 
             else: 
                 testedurl = prefix + url
+                
             tst.append(testedurl)    
             response = requests.get(testedurl) 
            
