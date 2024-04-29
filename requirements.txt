@@ -4,3 +4,4 @@ requests
 wget
 pandas
 openpyxl
+beautifulsoup4
