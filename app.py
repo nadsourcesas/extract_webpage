@@ -13,6 +13,7 @@ def hello_world():
     return "hello in bahae api"
 def get_html_text(url):
    tst= []
+   ers= []
    try: 
     prefixes = [ 'https://www.', 'http://www.','https://', 'http://']
     for prefix in prefixes.copy():
@@ -35,8 +36,8 @@ def get_html_text(url):
 
         except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
-    
-    return jsonify({'status': 'failed','tst':str(tst),'lasturl':'', 'data': '','prefix':'','testedurl':testedurl})
+            ers.append(e)
+    return jsonify({'status': 'failed','ers':str(ers),'tst':str(tst),'lasturl':'', 'data': '','prefix':'','testedurl':testedurl})
    except Exception as problem:
            return jsonify({'status': 'failed','tst':str(tst),"error":str(problem),'lasturl':'', 'data': '','prefix':'','testedurl':testedurl})
 
