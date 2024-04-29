@@ -37,4 +37,4 @@ def get_html(url):
     return "nothing worked"
 @app.route('/taskhtml/<string:name>')
 def taskhtml(name):
- return get_html_text(name)
+ return get_html(name)
