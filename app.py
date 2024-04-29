@@ -21,9 +21,9 @@ def get_html_text(url):
         
         try:
             if prefix in url :
-                response = requests.get( url[1:-1]) 
+                response = requests.get( url) 
             else:    
-               response = requests.get(prefix + url[1:-1]) 
+               response = requests.get(prefix + url) 
            
             if response.status_code == 200:
                 return  jsonify({'status': 'success',lasturl:str(response.history[-1].url),'prefix':prefix, 'data': BeautifulSoup(response.text).get_text()})
