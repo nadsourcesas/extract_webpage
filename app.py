@@ -23,7 +23,18 @@ def get_html_text(url):
             print(f"Error occurred while trying {prefix + url}: {e}")
     
     return "nothing worked"
-
-@app.route('/task/<string:name>')
-def task(name):
+def get_html(url):
+    prefixes = ['http://', 'https://', 'http://www.', 'https://www.']
+    
+    for prefix in prefixes:
+        try:
+            response = requests.get(prefix + url,timeout=10)
+            if response.status_code == 200:
+                return response.text
+        except Exception as e:#requests.RequestException
+            print(f"Error occurred while trying {prefix + url}: {e}")
+    
+    return "nothing worked"
+@app.route('/taskhtml/<string:name>')
+def taskhtml(name):
  return get_html_text(name)
