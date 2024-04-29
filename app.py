@@ -12,6 +12,7 @@ os.chdir("static")
 def hello_world():
     return "hello in bahae api"
 def get_html_text(url):
+   tst= 
    try: 
     prefixes = ['https://', 'http://', 'https://www.', 'http://www.']
     for prefix in prefixes:
@@ -26,17 +27,19 @@ def get_html_text(url):
                 
             else: 
                 testedurl = prefix + url
+            tst.append(testedurl)    
             response = requests.get(testedurl) 
            
             if response.status_code == 200:
-                return  jsonify({'status': 'success','testedurl':testedurl,'lasturl':str(response.history[-1].url),'prefix':prefix, 'data': BeautifulSoup(response.text).get_text()})
+                return  jsonify({'status': 'success','tst':str(tst),'testedurl':testedurl,'lasturl':str(response.history[-1].url),'prefix':prefix, 'data': BeautifulSoup(response.text).get_text()})
 
         except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
     
-    return jsonify({'status': 'failed',"error":str(e),'lasturl':str(response.history[-1].url), 'data': '','prefix':'','testedurl':testedurl})
+    return jsonify({'status': 'failed','tst':str(tst),'lasturl':str(response.history[-1].url), 'data': '','prefix':'','testedurl':testedurl})
    except Exception as problem:
-       return str(problem)
+           return jsonify({'status': 'failed','tst':str(tst),"error":str(problem),'lasturl':str(response.history[-1].url), 'data': '','prefix':'','testedurl':testedurl})
+
 def get_html(url):
     prefixes = ['http://', 'https://', 'http://www.', 'https://www.']
     
