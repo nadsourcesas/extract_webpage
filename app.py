@@ -27,7 +27,8 @@ def get_html_text(url):
             else: 
                 testedurl = prefix + url
                 
-            tst.append(testedurl)    
+            tst.append(testedurl)  
+            print("-----------------",tst)
             response = requests.get(testedurl) 
            
             if response.status_code == 200:
