@@ -14,12 +14,9 @@ def hello_world():
 def get_html_text(url):
    try: 
     prefixes = ['https://', 'http://', 'https://www.', 'http://www.']
-    forcedprefix=False
     for prefix in prefixes:
-        
-            forcedprefix=prefix
             prefixes.remove(prefix)
-            prefixes=[forcedprefix]+prefixes
+            prefixes=[prefix]+prefixes
     for prefix in prefixes:
         
         try:
