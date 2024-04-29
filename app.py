@@ -18,7 +18,7 @@ def get_html_text(url):
             response = requests.get(prefix + url)
             if response.status_code == 200:
                 return response.text
-        except requests.RequestException as e:
+        except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
     
     return "nothing worked"
