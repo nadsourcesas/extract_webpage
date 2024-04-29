@@ -19,12 +19,12 @@ def get_html_text(url):
         try:
             response = requests.get(prefix + url)
             if response.status_code == 200:
-                return  jsonify({'status': 'success', 'data': BeautifulSoup(response.text).get_text()})
+                return  jsonify({'status': 'success','prefix':prefix, 'data': BeautifulSoup(response.text).get_text()})
 
         except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
     
-    return jsonify({'status': 'failed', 'data': ''})
+    return jsonify({'status': 'failed', 'data': '','prefix':''})
    except Exception as problem:
        return str(problem)
 def get_html(url):
