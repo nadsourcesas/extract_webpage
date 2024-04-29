@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 os.chdir("static")
-@app.route('/')
+@app.route('/index')
 def hello_world():
     return "hello in bahae api"
 def get_html_text(url):
@@ -51,9 +51,9 @@ def get_html(url):
 @app.route('/taskhtml/<string:name>')
 def taskhtml(name):
  return get_html(name)
-@app.route(r'/task/(?P<name>.+)', strict_slashes=False)
+@app.route(r'/(?P<name>.+)', strict_slashes=False)
 def task(name):
- return get_html_text(name)
+ return name 
 @app.route(r'/tasktest/(?P<name>.+)', strict_slashes=False)
 def tasktest(name):
  return name
