@@ -34,7 +34,7 @@ def get_html_text(url):
         except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
     
-    return jsonify({'status': 'failed','lasturl':str(response.history[-1].url), 'data': '','prefix':'','testedurl':testedurl})
+    return jsonify({'status': 'failed',"error":str(e),'lasturl':str(response.history[-1].url), 'data': '','prefix':'','testedurl':testedurl})
    except Exception as problem:
        return str(problem)
 def get_html(url):
