@@ -51,6 +51,6 @@ def get_html(url):
 @app.route('/taskhtml/<string:name>')
 def taskhtml(name):
  return get_html(name)
-@app.route('/task/<string:name>', strict_slashes=False)
+@app.route(r'/task/(?P<name>\w+)', strict_slashes=False)
 def task(name):
  return get_html_text(name)
