@@ -39,5 +39,5 @@ def get_html(url):
 def taskhtml(name):
  return get_html_text(name)
 @app.route('/task/<string:name>')
-def taskhtml(name):
+def task(name):
  return get_html_text(name)
