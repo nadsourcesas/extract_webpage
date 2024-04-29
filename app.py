@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 import pandas as pd
 import requests
 import wget
@@ -19,11 +19,12 @@ def get_html_text(url):
         try:
             response = requests.get(prefix + url)
             if response.status_code == 200:
-                return BeautifulSoup(response.text).get_text()
+                return  jsonify({'status': 'success', 'data': BeautifulSoup(response.text).get_text()})
+
         except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
     
-    return "nothing worked"
+    return jsonify({'status': 'failed', 'data': ''})
    except Exception as problem:
        return str(problem)
 def get_html(url):
