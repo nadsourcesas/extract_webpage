@@ -22,17 +22,19 @@ def get_html_text(url):
         
         try:
             if prefix in url :
-                response = requests.get( url) 
-            else:    
-               response = requests.get(prefix + url) 
+                testedurl= url
+                
+            else: 
+                testedurl = prefix + url
+            response = requests.get(testedurl) 
            
             if response.status_code == 200:
-                return  jsonify({'status': 'success','lasturl':str(response.history[-1].url),'prefix':prefix, 'data': BeautifulSoup(response.text).get_text()})
+                return  jsonify({'status': 'success','testedurl':testedurl,'lasturl':str(response.history[-1].url),'prefix':prefix, 'data': BeautifulSoup(response.text).get_text()})
 
         except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
     
-    return jsonify({'status': 'failed','lasturl':'', 'data': '','prefix':''})
+    return jsonify({'status': 'failed','lasturl':str(response.history[-1].url), 'data': '','prefix':'','testedurl':testedurl})
    except Exception as problem:
        return str(problem)
 def get_html(url):
