@@ -59,7 +59,7 @@ def get_html_text(url):
            
             if response.status_code == 200:
                 soup=BeautifulSoup(response.text)
-                fj={'status': 'success','final':str(response.url),'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),'prefix':prefix, 'data': soup.get_text()}
+                fj={'status': 'success','final':str(response.url),'prefix':prefix, 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
                 fj.update(scrape_headings_from_html(soup))
                 
                 return  jsonify(fj)
