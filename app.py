@@ -11,6 +11,39 @@ os.chdir("static")
 @app.route('/index')
 def hello_world():
     return "hello in bahae api"
+def extract_title(soup):
+    """
+    Extracts the title from a BeautifulSoup object.
+    
+    Args:
+    - soup: BeautifulSoup object representing the parsed HTML
+    
+    Returns:
+    - title (str): The text of the title tag, or None if not found
+    """
+    title_tag = soup.title
+    if title_tag:
+        return title_tag.get_text().strip()
+    else:
+        return None    
+def extract_meta_tags(soup):
+    """
+    Extracts meta tags from a BeautifulSoup object.
+    
+    Args:
+    - soup: BeautifulSoup object representing the parsed HTML
+    
+    Returns:
+    - meta_tags (dict): A dictionary containing meta tag names as keys and their content as values,
+                        with numerical keys for multiple occurrences of the same tag
+    """
+    meta_tags = {}
+    meta_elements = soup.find_all('meta')
+    for i, meta in enumerate(meta_elements, start=1):
+        name = meta.get('name', f'meta_{i}')
+        content = meta.get('content', '')
+        meta_tags[name] = content.strip()
+    return meta_tags    
 def scrape_headings_from_html(soup):
     # Parse the HTML content
     
@@ -59,7 +92,7 @@ def get_html_text(url):
            
             if response.status_code == 200:
                 soup=BeautifulSoup(response.text)
-                fj={'status': 'success','final':str(response.url),'prefix':prefix, 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
+                fj={'status': 'success','titre':extract_title(soup),'metas':extract_meta_tags(soup),'final':str(response.url),'prefix':prefix, 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
                 fj.update(scrape_headings_from_html(soup))
                 
                 return  jsonify(fj)
