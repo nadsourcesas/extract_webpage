@@ -12,6 +12,7 @@ os.chdir("static")
 def hello_world():
     return "hello in bahae api"
 
+
 def extract_table_of_contents(soup):
     """
     Extracts the table of contents from a BeautifulSoup object.
@@ -41,9 +42,11 @@ def extract_table_of_contents(soup):
             current_level = table_of_contents
         else:
             parent_level = level - 1
-            current_level = current_level[parent_level]['subheadings']
+            # Ensure the parent level exists before accessing it
+            if parent_level in current_level:
+                current_level = current_level[parent_level]['subheadings']
     
-    return table_of_contents    
+    return table_of_contents 
 def extract_title(soup):
     """
     Extracts the title from a BeautifulSoup object.
