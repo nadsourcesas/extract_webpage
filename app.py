@@ -11,6 +11,32 @@ os.chdir("static")
 @app.route('/index')
 def hello_world():
     return "hello in bahae api"
+def scrape_headings_from_html(soup):
+    # Parse the HTML content
+    
+    # Find all heading tags (h1, h2, h3, h4, h5, h6)
+    headings = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+    
+    # Initialize a dictionary to store headings
+    headings_dict = {}
+    
+    # Loop through the heading tags
+    for heading in headings:
+        # Get the tag name (e.g., 'h1', 'h2', etc.)
+        tag_name = heading.name
+        
+        # Get the text of the heading
+        heading_text = heading.get_text().strip()
+        
+        # Get the numerical order of the heading
+        order = len(headings_dict.get(tag_name, [])) + 1
+        
+        # Add the heading text to the dictionary
+        if tag_name not in headings_dict:
+            headings_dict[tag_name] = {}
+        headings_dict[tag_name][order] = heading_text
+    
+    return headings_dict    
 def get_html_text(url):
    tst= []
    ers= []
@@ -32,7 +58,11 @@ def get_html_text(url):
             response = requests.get(testedurl, allow_redirects=True)
            
             if response.status_code == 200:
-                return  jsonify({'status': 'success','final':str(response.url),'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),'prefix':prefix, 'data': BeautifulSoup(response.text).get_text()})
+                soup=BeautifulSoup(response.text)
+                fj={'status': 'success','final':str(response.url),'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),'prefix':prefix, 'data': soup.get_text()}
+                fj.update(scrape_headings_from_html(soup))
+                
+                return  jsonify(fj)
 
         except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
