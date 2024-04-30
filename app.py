@@ -160,8 +160,8 @@ def get_html_text(url):
            
             if response.status_code == 200:
                 soup=BeautifulSoup(response.text)
-                fj={'status': 'success','titre':extract_title(soup),'metas':extract_meta_tags(soup),'final':str(response.url),'prefix':prefix, 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
-                fj.update(create_numbered_list(extract_titles(soup)))
+                fj={'status': 'success','titles':create_numbered_list(extract_titles(soup)),'titre':extract_title(soup),'metas':extract_meta_tags(soup),'final':str(response.url),'prefix':prefix, 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
+                
                 fj.update(scrape_headings_from_html(soup))
                 
                 return  jsonify(fj)
