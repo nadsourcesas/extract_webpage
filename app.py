@@ -29,7 +29,7 @@ def get_html_text(url):
                 
             tst.append(testedurl)  
             print("-----------------",tst)
-            response = requests.get(testedurl, allow_redirects=True)) 
+            response = requests.get(testedurl, allow_redirects=True)
            
             if response.status_code == 200:
                 return  jsonify({'status': 'success','final':str(response.url),'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),'prefix':prefix, 'data': BeautifulSoup(response.text).get_text()})
