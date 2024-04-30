@@ -189,4 +189,7 @@ def get_html(url):
 
 @app.errorhandler(404)
 def tasktest(name):
- return get_html_text(request.url.replace(r"https://test2-bblm.onrender.com/",""))
+ try:   
+  return get_html_text(request.url.replace(r"https://test2-bblm.onrender.com/",""))
+ except Exception as me:
+  return str(me)   
