@@ -68,7 +68,7 @@ def scrape_headings_from_html(soup):
       #  if tag_name not in headings_dict:
        #     headings_dict[tag_name] = {}
        # headings_dict[tag_name][order] = heading_text
-        headings_dict[tag_name+"_n_"+order] = heading_text
+        headings_dict[tag_name+"_i_"+order] = heading_text
     
     return headings_dict    
 def get_html_text(url):
