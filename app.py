@@ -5,13 +5,44 @@ import wget
 import os
 import subprocess 
 from bs4 import BeautifulSoup
-
+import roman
 app = Flask(__name__)
 os.chdir("static")
 @app.route('/index')
 def hello_world():
     return "hello in bahae api"
+def extract_titles(soup):
+    """Extrait tous les titres h1, h2, h3, h4 de la soupe donnée."""
+    titles = []
+    for level in range(1, 5):
+        for tag in soup.find_all(f'h{level}'):
+            titles.append((level, tag.text))
+    return titles
 
+def create_numbered_list(titles):
+    """Crée une liste numérotée avec des numéros, lettres et chiffres romains."""
+    counters = [0, 0, 0, 0]  # Compteurs pour h1, h2, h3, h4
+    result = {}
+
+    for level, title in titles:
+        # Incrémenter le bon compteur et réinitialiser les compteurs des niveaux inférieurs
+        counters[level - 1] += 1
+        for i in range(level, 4):
+            counters[i] = 0
+
+        # Créer la préfixe basée sur le niveau
+        if level == 1:
+            prefix = str(counters[0])
+        elif level == 2:
+            prefix = f"{counters[0]}.{chr(96 + counters[1])}"
+        elif level == 3:
+            prefix = f"{counters[0]}.{chr(96 + counters[1])}.{roman.toRoman(counters[2])}"
+        else:
+            prefix = f"{counters[0]}.{chr(96 + counters[1])}.{roman.toRoman(counters[2])}.{counters[3]}"
+
+        result[prefix]=title
+
+    return result
 
 def extract_table_of_contents(soup):
     """
@@ -129,7 +160,8 @@ def get_html_text(url):
            
             if response.status_code == 200:
                 soup=BeautifulSoup(response.text)
-                fj={'status': 'success','bahae':extract_table_of_contents(soup),'titre':extract_title(soup),'metas':extract_meta_tags(soup),'final':str(response.url),'prefix':prefix, 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
+                fj={'status': 'success','titre':extract_title(soup),'metas':extract_meta_tags(soup),'final':str(response.url),'prefix':prefix, 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
+                fj.update(create_numbered_list(extract_titles(soup)))
                 fj.update(scrape_headings_from_html(soup))
                 
                 return  jsonify(fj)
