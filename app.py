@@ -19,35 +19,51 @@ def extract_titles(soup):
             titles.append((level, tag.text))
     return titles
 
+import roman  # Required for converting integers to Roman numerals
+
 def create_numbered_list(titles):
-    import roman  # Assuming roman module is imported for roman numeral conversion
-    counters = [0, 0, 0, 0]  # Counters for h1, h2, h3, h4
+    counters = [0, 0, 0]  # Counters for h2, h3, h4
     result = {}
-    last_level = 1  # Starting level assumed as h1
+    current_h2 = None
+    current_h3 = None
 
     for level, title in titles:
-        # Reset lower counters if we ascend a level
-        if level > last_level:
-            for i in range(level - 1, 4):
-                counters[i] = 0
-
-        # Increment the counter for the current level
-        counters[level - 1] += 1
-
-        # Construct prefix based on current level
         if level == 1:
-            prefix = "0"
+            current_h1 = "0"
+            result[current_h1] = title  # h1 always numbered as "0"
         elif level == 2:
-            prefix = str(counters[1])
+            counters[0] += 1
+            counters[1] = 0  # Reset h3 counter
+            counters[2] = 0  # Reset h4 counter
+            current_h2 = f"{counters[0]}"
+            result[current_h2] = title
         elif level == 3:
-            prefix = f"{counters[1]}{chr(96 + counters[2])}"
+            counters[1] += 1
+            counters[2] = 0  # Reset h4 counter
+            current_h3 = f"{current_h2}{chr(96 + counters[1])}"
+            result[current_h3] = title
         elif level == 4:
-            prefix = f"{counters[1]}{chr(96 + counters[2])}-{roman.toRoman(counters[3]).lower()}"
-
-        result[prefix] = title
-        last_level = level
+            counters[2] += 1
+            current_h4 = f"{current_h3}-{roman.toRoman(counters[2]).lower()}"
+            result[current_h4] = title
 
     return result
+
+# Example usage:
+titles = [
+    (1, "Main Title H1"),
+    (2, "SubTitle H2"),
+    (3, "SubSubTitle H3"),
+    (4, "SubSubSubTitle H4"),
+    (2, "Another SubTitle H2"),
+    (3, "Another SubSubTitle H3"),
+    (4, "Another SubSubSubTitle H4")
+]
+
+numbered_titles = create_numbered_list(titles)
+for key, value in numbered_titles.items():
+    print(f"{key}: {value}")
+
 
 def extract_table_of_contents(soup):
     """
