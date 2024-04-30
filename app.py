@@ -15,7 +15,7 @@ def scrape_headings_from_html(soup):
     # Parse the HTML content
     
     # Find all heading tags (h1, h2, h3, h4, h5, h6)
-    headings = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+    headings = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6','p','a'])
     
     # Initialize a dictionary to store headings
     headings_dict = {}
