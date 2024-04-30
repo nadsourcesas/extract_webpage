@@ -65,8 +65,8 @@ def scrape_headings_from_html(soup):
         order = len(headings_dict.get(tag_name, [])) + 1
         
         # Add the heading text to the dictionary
-        if tag_name not in headings_dict:
-            headings_dict[tag_name] = {}
+      #  if tag_name not in headings_dict:
+       #     headings_dict[tag_name] = {}
        # headings_dict[tag_name][order] = heading_text
         headings_dict[tag_name+"_n_"+order] = heading_text
     
