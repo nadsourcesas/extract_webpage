@@ -20,23 +20,28 @@ def extract_titles(soup):
     return titles
 
 def create_numbered_list(titles):
-    counters = [0, 0, 0, 0, 0]  # Compteurs pour h1, h2, h3, h4, h5
+    counters = [0] * 5  # Compteurs pour h1, h2, h3, h4, h5
     result = {}
+    current_main = 1  # pour suivre le changement principal de section h2
+
     for level, title in titles:
+        if level == 2:  # Réinitialisation quand un nouveau h2 commence
+            counters[2:] = [0, 0, 0]  # Réinitialise les compteurs h3, h4, h5
+            current_main = counters[1] + 1
         counters[level - 1] += 1
-        for i in range(level, 5):
-            counters[i] = 0
+
         if level == 1:
-            prefix = '0'  # Pour h1, pas de numérotation visible
+            prefix = '0'  # h1 n'est pas numéroté dans votre système
         elif level == 2:
             prefix = str(counters[1])
         elif level == 3:
-            prefix = f"{counters[1]}.{chr(96 + counters[2])}"
+            prefix = f"{current_main}.{chr(96 + counters[2])}"
         elif level == 4:
-            prefix = f"{counters[1]}.{chr(96 + counters[2])}.{roman.toRoman(counters[3])}"
+            prefix = f"{current_main}.{chr(96 + counters[2])}.{roman.toRoman(counters[3])}"
         else:
-            prefix = f"{counters[1]}.{chr(96 + counters[2])}.{roman.toRoman(counters[3])}.{counters[4]}"
+            prefix = f"{current_main}.{chr(96 + counters[2])}.{roman.toRoman(counters[3])}.{counters[4]}"
         result[prefix] = title
+
     return result
 
 def extract_table_of_contents(soup):
