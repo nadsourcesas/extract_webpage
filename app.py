@@ -215,9 +215,11 @@ def get_html(url):
     return "nothing worked"
 
 
-@app.errorhandler(404)
-def tasktest(name):
+
+@app.route('/<path:subpath>')
+def tasktest(subpath):
  try:   
-  return get_html_text(request.url.replace(r"https://extract-webpage.onrender.com/",""))
+  print("-1-",subpath)   
+  return get_html_text(subpath)
  except Exception as me:
   return str(me)   
