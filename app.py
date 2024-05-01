@@ -19,52 +19,86 @@ def extract_titles(soup):
             titles.append((level, tag.text))
     return titles
 
-import roman  # Required for converting integers to Roman numerals
+def create_table_of_contents(soup):
+    # Initialize the table of contents list
+    table_of_contents = []
+    tag_names = ["h1", "h2", "h3", "h4", "h5"]
+    indices = [0] * len(tag_names)
 
-def create_numbered_list(titles):
-    counters = [0, 0, 0]  # Counters for h2, h3, h4
-    result = {}
-    current_h2 = None
-    current_h3 = None
+    # Loop through each tag name
+    for index, tag_name in enumerate(tag_names):
+        # Find all occurrences of the tag in the soup
+        tags = soup.find_all(tag_name)
 
-    for level, title in titles:
-        if level == 1:
-            current_h1 = "0"
-            result[current_h1] = title  # h1 always numbered as "0"
-        elif level == 2:
-            counters[0] += 1
-            counters[1] = 0  # Reset h3 counter
-            counters[2] = 0  # Reset h4 counter
-            current_h2 = f"{counters[0]}"
-            result[current_h2] = title
-        elif level == 3:
-            counters[1] += 1
-            counters[2] = 0  # Reset h4 counter
-            current_h3 = f"{current_h2}{chr(96 + counters[1])}"
-            result[current_h3] = title
-        elif level == 4:
-            counters[2] += 1
-            current_h4 = f"{current_h3}-{roman.toRoman(counters[2]).lower()}"
-            result[current_h4] = title
+        # Loop through each found tag
+        for tag in tags:
+            # Get the content of the tag
+            content = tag.get_text().strip()
 
-    return result
+            # Find the position of the tag content in the entire HTML content
+            position = soup.get_text().find(content)
 
-# Example usage:
-titles = [
-    (1, "Main Title H1"),
-    (2, "SubTitle H2"),
-    (3, "SubSubTitle H3"),
-    (4, "SubSubSubTitle H4"),
-    (2, "Another SubTitle H2"),
-    (3, "Another SubSubTitle H3"),
-    (4, "Another SubSubSubTitle H4")
-]
+            # Set the index for the current level of hierarchy
+            indices[index] += 1
 
-numbered_titles = create_numbered_list(titles)
-for key, value in numbered_titles.items():
-    print(f"{key}: {value}")
+            # Create the index string for the current tag
+            if index == 1:
+                index_str = chr(96 + indices[1])
+            elif index >= 3:
+                index_str = roman.toRoman(indices[index])
+            else:
+                index_str = str(indices[index])
 
+            # Create a dictionary to store the tag information
+            tag_info = {
+                "tag_name": tag_name,
+                "index": index_str,
+                "position": position,
+                "content": content
+            }
 
+            # Append the tag information to the table of contents list
+            table_of_contents.append(tag_info)
+
+            # Reset indices for lower levels of hierarchy
+            for j in range(index + 1, len(indices)):
+                indices[j] = 0
+
+    return sorted(table_of_contents, key=lambda x: x['position'])
+def tbl(soup):
+ rt= {}  
+# Create the table of contents
+ table_of_contents = create_table_of_contents(soup)
+
+# Print the table of contents
+ niv = int(table_of_contents[0].get('tag_name')[1:])
+ debut = "0"
+ ii = 0
+
+ for i in table_of_contents:
+    nniv = int(i.get('tag_name')[1:])
+
+    if nniv > niv:
+        ii += 1
+        debut = debut + ".1"
+    elif nniv == niv:
+        debut = ".".join(debut.split(".")[:-1] + [str(int(debut.split(".")[-1]) + 1)])
+    else:
+        ii -= 1
+        debut = ".".join(debut.split(".")[:-2] + [str(int(debut.split(".")[-2]) + 1)])
+
+    niv = nniv
+    def ch(a):
+      if len(a)==1:
+        return a[0]
+      elif len(a)==2:
+        return [a[0],chr(96 + int(a[1]))]
+      else :
+        
+        return [a[0],chr(96 + int(a[1])),roman.toRoman(int(a[2]))]+a[3::]
+    chh=ch(debut.split("."))
+    rt['.'.join(chh)]=i.get('content')
+ return rt 
 def extract_table_of_contents(soup):
     """
     Extracts the table of contents from a BeautifulSoup object.
@@ -181,7 +215,7 @@ def get_html_text(url):
            
             if response.status_code == 200:
                 soup=BeautifulSoup(response.text)
-                fj={'status': 'success','titles':create_numbered_list(extract_titles(soup)),'titre':extract_title(soup),'metas':extract_meta_tags(soup),'final':str(response.url),'prefix':prefix, 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
+                fj={'status': 'success','titles':tbl(soup),'titre':extract_title(soup),'metas':extract_meta_tags(soup),'final':str(response.url),'prefix':prefix, 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
                 
                 fj.update(scrape_headings_from_html(soup))
                 
