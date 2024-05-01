@@ -194,6 +194,7 @@ def scrape_headings_from_html(soup):
     
     return headings_dict    
 def get_html_text(url):
+   tst= []
    ers= []
    try: 
     prefixes = [ 'https://','http://','https://www.',  'http://www.']
@@ -208,22 +209,24 @@ def get_html_text(url):
             else: 
                 testedurl = prefix + url
                 
-                response = requests.get(testedurl, allow_redirects=True)
+            tst.append(testedurl)  
+            print("-----------------",tst)
+            response = requests.get(testedurl, allow_redirects=True)
            
             if response.status_code == 200:
                 soup=BeautifulSoup(response.text)
-                fj={'status': 'success','titles':tbl(soup),'topic':extract_title(soup),'metas':extract_meta_tags(soup),'final':str(response.url),'prefix':prefix, 'data': soup.get_text()}#,'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
+                fj={'status': 'success','titles':tbl(soup),'titre':extract_title(soup),'metas':extract_meta_tags(soup),'final':str(response.url),'prefix':prefix, 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
                 
-                #fj.update(scrape_headings_from_html(soup))
+                fj.update(scrape_headings_from_html(soup))
                 
                 return  jsonify(fj)
 
         except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
             ers.append(e)
-    return jsonify({'status': 'failed','ers':str(ers),'lasturl':'', 'data': '','prefix':'','testedurl':testedurl})
+    return jsonify({'status': 'failed','ers':str(ers),'tst':str(tst),'lasturl':'', 'data': '','prefix':'','testedurl':testedurl})
    except Exception as problem:
-           return jsonify({'status': 'failed',"error":str(problem),'lasturl':'', 'data': '','prefix':'','testedurl':testedurl})
+           return jsonify({'status': 'failed','tst':str(tst),"error":str(problem),'lasturl':'', 'data': '','prefix':'','testedurl':testedurl})
 
 def get_html(url):
     prefixes = ['http://', 'https://', 'http://www.', 'https://www.']
