@@ -6,6 +6,8 @@ import os
 import subprocess 
 from bs4 import BeautifulSoup
 import roman
+from collections import OrderedDict
+import json
 app = Flask(__name__)
 os.chdir("static")
 @app.route('/index')
@@ -66,7 +68,7 @@ def create_table_of_contents(soup):
 
     return sorted(table_of_contents, key=lambda x: x['position'])
 def tbl(soup):
- rt= {}  
+ rt= OrderedDict()  
 # Create the table of contents
  table_of_contents = create_table_of_contents(soup)
 
@@ -97,6 +99,7 @@ def tbl(soup):
         
         return [a[0],chr(96 + int(a[1])),roman.toRoman(int(a[2]))]+a[3::]
     chh=ch(debut.split("."))
+   # rt[i.get('position')]={"position":i.get('position'),"index":'.'.join(chh),"text":i.get('content')}
     rt['.'.join(chh)]=i.get('content')
  return rt 
 def extract_table_of_contents(soup):
@@ -188,11 +191,14 @@ def get_html_text(url):
            
             if response.status_code == 200:
                 soup=BeautifulSoup(response.text, features='html.parser')
-                fj={'status': 'success','h1':soup.find('h1').get_text().strip(),'titles':tbl(soup),'topic':extract_title(soup),'metas':extract_meta_tags(soup),'final':str(response.url), 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
+                ttbl=tbl(soup)
+                ttblk=list(ttbl.keys())
+                ttblv=list(ttbl.values())
+                fj={'status': 'success','h1':soup.find('h1').get_text().strip(),'titles':{"Paragraphe":ttblk,"numrows":len(ttblk),"Title":ttblv,"rows":list(range(2,len(ttblv)+2))},'topic':extract_title(soup),'metas':extract_meta_tags(soup),'final':str(response.url), 'data': soup.get_text()}#,'tst':str(tst),'testedurl':testedurl,'lasturl':str(list(map(lambda a:a.url,response.history))),
                 
            #     fj.update(scrape_headings_from_html(soup))
                 
-                return  jsonify(fj)
+                return  jsonify(OrderedDict(list(fj.items())))
 
         except Exception as e:#requests.RequestException
             print(f"Error occurred while trying {prefix + url}: {e}")
